@@ -56,13 +56,13 @@ namespace mvp.Services
             MessageInfo item = JsonConvert.DeserializeObject<MessageInfo>(data);
 
             // ACK the message right away, since we may take a while
-            this.queueClient.CompleteAsync(message.SystemProperties.LockToken);
+            await this.queueClient.CompleteAsync(message.SystemProperties.LockToken);
 
             logger.LogDebug($"{item.CorrelationId} | BusListenerService received item.");
 
             // Take a while - renewing lock fails despite message being completed
             // Exception does not stop execution of this message handler
-            Thread.Sleep(25000);
+            await Task.Delay(25000);
             logger.LogDebug($"{item.CorrelationId} | BusListenerService processed item.");
         }
     }

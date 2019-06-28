@@ -38,13 +38,13 @@ namespace mvp.Controllers
 
         // POST api/values
         [HttpPost]
-        public ActionResult<Dictionary<string, string>> Post()
+        public async Task<ActionResult<Dictionary<string, string>>> PostAsync()
         {
             var messageInfo = new MessageInfo();
             var queueClient = new QueueClient(configuration.GetValue<string>("serviceBusConnectionString"), configuration.GetValue<string>("serviceBusQueueName"));
             var json = JsonConvert.SerializeObject(messageInfo);
             var message = new Message(Encoding.UTF8.GetBytes(json));
-            queueClient.SendAsync(message);
+            await queueClient.SendAsync(message);
             logger.LogDebug($"{messageInfo.CorrelationId.ToString()} | BusListenerService sent item.");
 
             return Ok(new Dictionary<string, string>() { {"CorrelationId", messageInfo.CorrelationId.ToString() }});
