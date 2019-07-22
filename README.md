@@ -10,5 +10,12 @@ This is a code sample and not indended for production use as-is. Some components
 3. Exception and error handling
 4. Aritrary message types
 
+## Known issues
+Due to the way the .NET Azure SDK is coded, the message auto-renew timer continues in the background even if messages are completed. This can result in harmless `MessageLockLostException` exceptions, especially for some long-running message handlers:
+```
+Microsoft.Azure.ServiceBus.MessageLockLostException: The lock supplied is invalid. Either the lock expired, or the message has already been removed from the queue.
+```
+The SDK authors have determined this behavior is as designed. See [Azure/azure-sdk-for-net#6723](https://github.com/Azure/azure-sdk-for-net/issues/6723) for details.
+
 ## License
 This code sample is released under the MIT license.
