@@ -1,4 +1,9 @@
 # aspnet-servicebus-hostedservice
+
+## Archival note
+
+The sample will remain published as a reference, but both the Azure SDKs and ASP.NET have seen new revisions since this code was published. As this code sample has aged, I have chosen to archive this repo.
+
 ## Overview
 This project provides a Web API (ASP.NET Core 2) that submits messages to Service Bus, and then has background worker service created as a IHostedService to read from the queue and handle the long-running tasks.
 
